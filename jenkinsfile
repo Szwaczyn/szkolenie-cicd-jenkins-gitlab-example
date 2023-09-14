@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk "jdk-17"
+        maven "maven-3"
+    }
+
+    parameters {
+        string(name: 'VERSION_NAME', defaultValue: 'Mr Jenkins', description: 'Name of version')
+
+        choice(name: 'DEV_EVIROMENT', choices: ['TEST', 'PrePROD', 'PROD'], description: 'Selecr enviroment')
+
+    }
+
+    stages {
+       stage('Clean workspace') {
+            steps {
+                cleanWs disableDeferredWipeout: true, deleteDirs: true
+            }
+        }
+
+        stage('Pull pet-clinic') {
+            steps {
+                 git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
+            }
+            post {
+                failure {
+                    slackSend message: 'Faild'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "mvn clean install -DskipTests"
+                slackSend message: 'Budowa wersji ' + env.BUILD_TAG + ' link: ' + env.BUILD_URL
+                slackSend message: "Wersja ${params.VERSION_NAME} na środowisku ${params.DEV_EVIROMENT}"
+            }
+        }
+
+        stage('Tests') {
+            steps {
+                 sh "mvn test"
+                 slackSend message: "Testy ok"
+            }
+        }
+
+        stage('base-curl-with-credentials') {
+            environment {
+                CREDENTIAL = credentials('authUser')
+            }
+            steps {
+                sh 'echo "user: $CREDENTIAL_USR"'
+                sh 'echo "Password: $CREDENTIAL_PSW"'
+                sh 'curl -i -u "$CREDENTIAL" https://httpbin.org/basic-auth/foo/bar'
+
+                sh 'echo curl withCredential'
+                withCredentials([usernameColonPassword(credentialsId: 'authUser', variable: 'CREDENTIALS')]) {
+                    sh 'curl -i -u "$CREDENTIALS" https://httpbin.org/basic-auth/foo/bar'
+                }
+            }
+        }
+    }
+}
