@@ -6,6 +6,11 @@ stages:
 
 image: maven:3.9.2-eclipse-temurin-17
 
+cache:
+  paths:
+    - .m2/repository
+  key: ${CI_COMMIT_SHA}
+
 build-job:
   stage: build
   tags: [linux, docker]
