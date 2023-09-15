@@ -17,9 +17,18 @@ build-job:
   script:
     - mvn clean verify -DskipTests
 
+build-shell:
+  stage: build-shell
+  tags: [linux, shared]
+  artifacts:
+    paths: [/home/art]
+  script:
+    - mvn clean package -DskipTests
+
 build-package:
   stage: build-package
   when: manual
+
   script:
     - mvn clean package
 
@@ -34,7 +43,5 @@ merge-request:
   stage: merge-request
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-  artifacts:
-    paths: [/home/art]
   script:
     - mvn clean verify
