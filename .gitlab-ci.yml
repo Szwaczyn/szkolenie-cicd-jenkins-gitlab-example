@@ -11,6 +11,8 @@ build-job:
     - mvn clean verify -DskipTests
 
 test-job:
+  only: 
+    - dev
   stage: test
   script:
     - mvn test
