@@ -13,7 +13,7 @@ pipeline {
             }
         }
 
-        stage('Pull pet-clinic') {
+        stage('Pull szkolenie cicd') {
             steps {
                  git branch: 'main', url: 'https://github.com/Szwaczyn/szkolenie-cicd-jenkins-gitlab-example.git'
             }
