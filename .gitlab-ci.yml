@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-image: openjdk:17.0.2-slim-bullseye
+image: maven:3.9.2-eclipse-temurin-17
 
 build-job:
   stage: build
