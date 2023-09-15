@@ -1,10 +1,15 @@
 stages:
   - build
+  - test
 
 image: openjdk:17.0.2-slim-bullseye
 
 build-job:
   stage: build
   script:
-    - echo "Hello World!"
-    - mvn clean verify
+    - mvn clean verify -DskipTests
+
+test-job:
+  stage: test
+  script:
+    -mvn test
