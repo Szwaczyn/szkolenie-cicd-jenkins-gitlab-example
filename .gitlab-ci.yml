@@ -22,7 +22,7 @@ artifacts-deploy:
   stage: artifacts-deploy
   artifacts:
     paths: 
-      - binaries/
+      - $CI_PROJECT_DIR/docs
   script:
     - mvn clean package -DskipTests
 
