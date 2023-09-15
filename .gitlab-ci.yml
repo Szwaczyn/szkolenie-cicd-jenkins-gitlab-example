@@ -6,7 +6,7 @@ image: openjdk:17.0.2-slim-bullseye
 
 build-job:
   stage: build
-  tags: [docker]
+  tags: [linux, docker]
   script:
     - mvn clean verify -DskipTests
 
