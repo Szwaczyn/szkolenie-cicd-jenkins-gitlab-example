@@ -24,7 +24,7 @@ artifacts-deploy:
     - mvn clean package -DskipTests
   artifacts:
     paths: 
-      - $CI_PROJECT_DIR/docs
+      - $CI_PROJECT_DIR
 
 build-package:
   stage: build-package
