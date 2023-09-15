@@ -5,3 +5,4 @@ build-job:
   stage: build
   script:
     - echo "Hello World!"
+    - echo "build app"
