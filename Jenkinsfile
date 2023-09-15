@@ -15,7 +15,7 @@ pipeline {
 
         stage('Pull pet-clinic') {
             steps {
-                 git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
+                 git branch: 'main', url: 'https://github.com/Szwaczyn/szkolenie-cicd-jenkins-gitlab-example.git'
             }
             post {
                 failure {
