@@ -20,11 +20,11 @@ build-job:
 
 artifacts-deploy:
   stage: artifacts-deploy
+  script:
+    - mvn clean package -DskipTests
   artifacts:
     paths: 
       - $CI_PROJECT_DIR/docs
-  script:
-    - mvn clean package -DskipTests
 
 build-package:
   stage: build-package
