@@ -12,4 +12,4 @@ build-job:
 test-job:
   stage: test
   script:
-    -mvn test
+    - mvn test
