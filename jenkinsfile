@@ -6,13 +6,6 @@ pipeline {
         maven "maven-3"
     }
 
-    parameters {
-        string(name: 'VERSION_NAME', defaultValue: 'Mr Jenkins', description: 'Name of version')
-
-        choice(name: 'DEV_EVIROMENT', choices: ['TEST', 'PrePROD', 'PROD'], description: 'Selecr enviroment')
-
-    }
-
     stages {
        stage('Clean workspace') {
             steps {
@@ -43,22 +36,6 @@ pipeline {
             steps {
                  sh "mvn test"
                  slackSend message: "Testy ok"
-            }
-        }
-
-        stage('base-curl-with-credentials') {
-            environment {
-                CREDENTIAL = credentials('authUser')
-            }
-            steps {
-                sh 'echo "user: $CREDENTIAL_USR"'
-                sh 'echo "Password: $CREDENTIAL_PSW"'
-                sh 'curl -i -u "$CREDENTIAL" https://httpbin.org/basic-auth/foo/bar'
-
-                sh 'echo curl withCredential'
-                withCredentials([usernameColonPassword(credentialsId: 'authUser', variable: 'CREDENTIALS')]) {
-                    sh 'curl -i -u "$CREDENTIALS" https://httpbin.org/basic-auth/foo/bar'
-                }
             }
         }
     }
