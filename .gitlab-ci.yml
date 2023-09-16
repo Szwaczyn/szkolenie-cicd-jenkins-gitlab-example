@@ -1,5 +1,6 @@
 stages:
   - build
+  - build-image
 
 image: maven:3.9.2-eclipse-temurin-17
 
@@ -7,4 +8,9 @@ build-job:
   stage: build
   tags: [linux, docker]
   script:
-    - mvn clean verify -DskipTests
+    - mvn clean verify
+
+build-image:
+  stage: build-image
+  script:
+    - mvn clean spring-boot:build-image
