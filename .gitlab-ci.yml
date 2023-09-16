@@ -1,48 +1,28 @@
 stages:
   - build
-  - test
-  - build-package
-  - merge-request
-  - artifacts-deploy
+  # - build-image
+  - docker-build
 
 image: maven:3.9.2-eclipse-temurin-17
 
-cache:
-  paths:
-    - .m2/repository
-  key: ${CI_COMMIT_SHA}
-
 build-job:
   stage: build
-  tags: [linux, docker]
-  script:
-    - mvn clean verify -DskipTests
-
-artifacts-deploy:
-  stage: artifacts-deploy
-  script:
-    - mvn clean package -DskipTests
-  artifacts:
-    paths: 
-      - $CI_PROJECT_DIR/target/*.jar
-
-build-package:
-  stage: build-package
-  when: manual
-
-  script:
-    - mvn clean package
-
-test-job:
-  only: 
-    - dev
-  stage: test
-  script:
-    - mvn test
-
-merge-request:
-  stage: merge-request
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  tags: [linux, shared]
   script:
     - mvn clean verify
+
+# build-image:
+#   stage: build-image
+#   tags: [linux, shared]
+#   script:
+#     - mvn clean spring-boot:build-image
+
+build:
+  image: docker:20.10.16
+  stage: docker-build
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/group/project/image:latest .
+    - docker push $CI_REGISTRY/group/project/image:latest
