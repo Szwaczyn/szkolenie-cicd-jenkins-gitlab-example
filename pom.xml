@@ -38,4 +38,10 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>artifactory-nexus-szkolenie</id>
+			<url>http://10.222.20.209:8085/repository/szkolenie-cicd-snapshot/</url>
+		</repository>
+	</distributionManagement>
 </project>
