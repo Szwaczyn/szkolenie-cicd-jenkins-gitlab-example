@@ -1,6 +1,6 @@
 stages:
   - build
-  - build-image
+  # - build-image
   - docker-build
 
 image: maven:3.9.2-eclipse-temurin-17
@@ -11,11 +11,11 @@ build-job:
   script:
     - mvn clean verify
 
-build-image:
-  stage: build-image
-  tags: [linux, shared]
-  script:
-    - mvn clean spring-boot:build-image
+# build-image:
+#   stage: build-image
+#   tags: [linux, shared]
+#   script:
+#     - mvn clean spring-boot:build-image
 
 build:
   image: docker:20.10.16
