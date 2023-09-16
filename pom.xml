@@ -29,15 +29,6 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 	<distributionManagement>
 		<snapshotRepository>
 			<id>artifactory-nexus-szkolenie</id>
@@ -48,4 +39,29 @@
 			<url>http://10.222.20.209:8085/repository/szkolenie-cicd/</url>
 		</repository>
 	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:https://github.com/Szwaczyn/szkolenie-cicd-jenkins-gitlab-example.git</connection>
+		<developerConnection>scm:git:https://github.com/Szwaczyn/szkolenie-cicd-jenkins-gitlab-example.git</developerConnection>
+	</scm>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.2</version>
+					<configuration>
+						<tagBase>https://github.com/Szwaczyn/szkolenie-cicd-jenkins-gitlab-example.git</tagBase>
+						<releaseProfiles>release</releaseProfiles>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
