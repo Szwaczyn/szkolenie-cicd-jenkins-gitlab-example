@@ -9,5 +9,10 @@
             <username>admin</username>
             <password>zaq12wsx</password>
         </server>
+        <server>
+            <id>artifactory-nexus-szkolenie-release</id>
+            <username>admin</username>
+            <password>zaq12wsx</password>
+        </server>
     </servers>
 </settings>
